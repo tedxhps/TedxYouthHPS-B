@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TEDx HPS Begumpet Youth</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- React + ReactDOM -->
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-    <!-- Babel to compile JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body class="bg-black text-white">
@@ -32,28 +30,28 @@
 
       function SpeakersCarousel({ onSelect }) {
         const scrollRef = React.useRef(null);
-        const rafRef = React.useRef(null);
+        const directionRef = React.useRef(1);
 
         React.useEffect(() => {
-          const container = scrollRef.current;
-          if (!container) return;
+          const el = scrollRef.current;
+          if (!el) return;
 
-          let speed = 0.6;
-          const step = () => {
-            container.scrollLeft += speed;
-            if (container.scrollLeft >= container.scrollWidth / 2) container.scrollLeft = 0;
-            rafRef.current = requestAnimationFrame(step);
-          };
-
-          rafRef.current = requestAnimationFrame(step);
-          return () => cancelAnimationFrame(rafRef.current);
+          const speed = 0.8;
+          function step() {
+            el.scrollLeft += directionRef.current * speed;
+            if (el.scrollLeft + el.clientWidth >= el.scrollWidth || el.scrollLeft <= 0) {
+              directionRef.current *= -1;
+            }
+            requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
         }, []);
 
         return (
-          <div className="w-full overflow-hidden" aria-hidden={false}>
+          <div className="w-full overflow-hidden">
             <div ref={scrollRef} className="flex gap-8 w-max">
-              {[...SPEAKERS, ...SPEAKERS].map((s, i) => (
-                <div key={i} className="inline-block bg-gradient-to-b from-zinc-900 to-black border border-red-800 rounded-xl w-80 flex-shrink-0 overflow-hidden">
+              {SPEAKERS.map((s) => (
+                <div key={s.id} className="inline-block bg-gradient-to-b from-zinc-900 to-black border border-red-800 rounded-xl w-80 flex-shrink-0 overflow-hidden">
                   <button onClick={() => onSelect(s.id)} className="block text-left w-full">
                     <img src={s.photo} alt={s.name} className="w-full h-60 object-cover" />
                     <div className="p-4">
@@ -73,11 +71,6 @@
         const [page, setPage] = React.useState("home");
         const [currentSpeaker, setCurrentSpeaker] = React.useState(null);
 
-        function handleNav(target) {
-          setCurrentSpeaker(null);
-          setPage(target);
-        }
-
         function gotoSpeaker(id) {
           const s = SPEAKERS.find((x) => x.id === id);
           if (s) setCurrentSpeaker(s);
@@ -91,17 +84,30 @@
                   <img src={LOGO_URL} alt="TEDx Logo" className="h-10" />
                   <span className="text-lg font-bold text-red-600">TEDx HPS Begumpet Youth</span>
                 </div>
-
                 <nav className="absolute left-1/2 transform -translate-x-1/2">
                   <div className="flex gap-8">
-                    <button onClick={() => handleNav("home")} className={`text-sm font-medium ${page === "home" ? "text-red-400" : "text-gray-300"}`}>Home</button>
-                    <button onClick={() => handleNav("info")} className={`text-sm font-medium ${page === "info" ? "text-red-400" : "text-gray-300"}`}>About</button>
-                    <button onClick={() => handleNav("team")} className={`text-sm font-medium ${page === "team" ? "text-red-400" : "text-gray-300"}`}>Meet the Team</button>
-                    <button onClick={() => handleNav("organisers")} className={`text-sm font-medium ${page === "organisers" ? "text-red-400" : "text-gray-300"}`}>Organisers & Event</button>
+                    {["home", "info", "team", "organisers"].map((p) => (
+                      <button
+                        key={p}
+                        onClick={() => {
+                          setCurrentSpeaker(null);
+                          setPage(p);
+                        }}
+                        className={`text-sm font-medium ${
+                          page === p ? "text-red-400" : "text-gray-300"
+                        }`}
+                      >
+                        {p === "home"
+                          ? "Home"
+                          : p === "info"
+                          ? "About"
+                          : p === "team"
+                          ? "Meet the Team"
+                          : "Organisers & Event"}
+                      </button>
+                    ))}
                   </div>
                 </nav>
-
-                <div className="ml-auto w-24" />
               </div>
             </header>
 
@@ -113,10 +119,12 @@
                     <div>
                       <h2 className="text-3xl font-bold text-red-500">{currentSpeaker.name}</h2>
                       <div className="text-gray-300 mt-2">{currentSpeaker.title}</div>
-                      <p className="mt-4 text-gray-300">Extended placeholder biography for {currentSpeaker.name}. Details of achievements and background.</p>
-                      <div className="mt-6 flex gap-3">
-                        <button onClick={() => setCurrentSpeaker(null)} className="px-4 py-2 rounded bg-red-600 text-black font-semibold">Close</button>
-                      </div>
+                      <p className="mt-4 text-gray-300">
+                        Extended placeholder biography for {currentSpeaker.name}. Details of achievements and background.
+                      </p>
+                      <button onClick={() => setCurrentSpeaker(null)} className="mt-6 px-4 py-2 rounded bg-red-600 text-black font-semibold">
+                        Close
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -127,12 +135,60 @@
               {page === "home" && (
                 <section className="min-h-screen flex flex-col items-center justify-center text-center px-6">
                   <h1 className="text-6xl font-extrabold text-red-600 mb-6">TED-Tech: The Fusion of Ideas and Innovation</h1>
-                  <p className="max-w-3xl text-gray-300 mb-10">Landing introduction connecting technology, creativity, and youth potential.</p>
-
+                  <p className="max-w-3xl text-gray-300 mb-10">
+                    Landing introduction connecting technology, creativity, and youth potential.
+                  </p>
                   <div className="w-full max-w-6xl">
                     <h3 className="text-2xl text-red-400 mb-4">Speakers</h3>
                     <SpeakersCarousel onSelect={gotoSpeaker} />
                   </div>
+                </section>
+              )}
+
+              {page === "info" && (
+                <section className="py-20 px-6 max-w-4xl mx-auto text-center">
+                  <h2 className="text-4xl font-bold text-red-500 mb-6">What is TEDx?</h2>
+                  <p className="text-gray-200 mb-10">
+                    TEDx is a program of local, self-organized events that bring people together to share a TED-like experience.
+                  </p>
+                  <h2 className="text-4xl font-bold text-red-500 mb-6">Importance of Chapter 1</h2>
+                  <p className="text-gray-200 mb-10">
+                    Chapter 1 marks the beginning of a legacy—a movement of youth-driven innovation and dialogue.
+                  </p>
+                  <h2 className="text-4xl font-bold text-red-500 mb-6">Theme & The Story Behind It</h2>
+                  <p className="text-gray-200">
+                    Our theme represents the intersection of creativity, resilience, and technology shaping tomorrow.
+                  </p>
+                </section>
+              )}
+
+              {page === "team" && (
+                <section className="py-20 px-6 max-w-6xl mx-auto text-center">
+                  <h2 className="text-4xl font-bold text-red-500 mb-6">Meet the Team</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+                    {TEAM.map((member) => (
+                      <div key={member.id} className="relative group rounded-xl overflow-hidden border border-red-800">
+                        <img src={member.photo} alt={member.name} className="object-cover w-full h-80 transition-transform duration-500 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                          <p className="text-red-500 text-lg font-semibold">{member.name}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {page === "organisers" && (
+                <section className="py-20 px-6 max-w-4xl mx-auto text-center">
+                  <h2 className="text-4xl font-bold text-red-500 mb-6">From the Organiser's Desk</h2>
+                  <p className="text-gray-200 mb-10">
+                    A note from the Principal and Vice Principal acknowledging the dedication behind TEDx HPS Begumpet Youth.
+                  </p>
+                  <h2 className="text-4xl font-bold text-red-500 mb-6">Event Details</h2>
+                  <p className="text-gray-200">Date: April 20, 2025 | Time: 9:00 AM - 4:00 PM | Venue: HPS Begumpet Auditorium</p>
+                  <p className="text-gray-400 mt-4">
+                    Dress Code: Red & Black for attendees, Black for volunteers.
+                  </p>
                 </section>
               )}
             </main>
