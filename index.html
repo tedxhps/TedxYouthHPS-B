@@ -7,26 +7,22 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     :root{--red:#c8102e;--dark:#050505}
-    body{background:linear-gradient(180deg,var(--dark) 0%,#2b0000 60%);color:#eee;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,"Helvetica Neue",Arial}
+    body{background:linear-gradient(180deg,var(--dark) 0%,#2b0000 80%);color:#eee;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,"Helvetica Neue",Arial}
     header{backdrop-filter:blur(6px)}
 
-    /* carousel */
     .carousel-viewport{position:relative;overflow:hidden}
     .carousel-track{display:flex;gap:1.25rem;align-items:stretch;white-space:nowrap}
     .card{background:linear-gradient(180deg,#0b0b0b,#060505);border:1px solid rgba(200,0,30,0.18);border-radius:12px;flex:0 0 320px;overflow:hidden}
     .card img{width:100%;height:200px;object-fit:cover;display:block}
     .card .meta{padding:1rem}
 
-    /* hide native scrollbars */
     .carousel-viewport::-webkit-scrollbar{display:none}
     .carousel-viewport{ -ms-overflow-style:none; scrollbar-width:none }
 
-    /* subtle fade edges so the loop doesn't look abrupt */
     .fade-edge{position:absolute;top:0;bottom:0;width:8vw;pointer-events:none}
     .fade-left{left:0;background:linear-gradient(90deg,rgba(0,0,0,0.85) 0%,transparent 100%)}
     .fade-right{right:0;background:linear-gradient(270deg,rgba(0,0,0,0.85) 0%,transparent 100%)}
 
-    /* small responsive tweaks */
     @media (max-width:768px){.card{flex:0 0 260px}.card img{height:160px}}
   </style>
 </head>
@@ -41,7 +37,6 @@
         </div>
       </div>
 
-      <!-- centered nav -->
       <nav class="flex-1">
         <ul id="nav" class="mx-auto flex gap-6 justify-center text-sm text-gray-300">
           <li><a href="#" data-page="home" class="nav-link">Home</a></li>
@@ -57,9 +52,8 @@
   </header>
 
   <main id="app">
-    <!-- HOME -->
     <section data-page="home" class="page min-h-screen flex flex-col items-center justify-center text-center px-6">
-      <h1 class="text-5xl md:text-6xl font-extrabold text-red-400 leading-tight">TED‑Tech — Ideas. Code. Culture.</h1>
+      <h1 class="text-5xl md:text-6xl font-extrabold text-red-400 leading-tight">TED-Tech — Ideas. Code. Culture.</h1>
       <p class="max-w-3xl text-gray-300 mt-6">A one-day event connecting technology, creativity and civic imagination. Placeholder intro text for landing.</p>
 
       <div class="mt-10 max-w-3xl text-left text-gray-200 space-y-6">
@@ -75,7 +69,6 @@
       </div>
     </section>
 
-    <!-- INFO (What is TEDx / Chapter 1 / Theme) -->
     <section data-page="info" class="page hidden py-20 px-6">
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="text-3xl font-bold text-red-400">What is TEDx?</h2>
@@ -89,12 +82,10 @@
       </div>
     </section>
 
-    <!-- TEAM -->
     <section data-page="team" class="page hidden py-20 px-6">
       <div class="max-w-6xl mx-auto text-center">
         <h2 class="text-3xl font-bold text-red-400 mb-8">Meet the Team</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          <!-- team cards with hover reveal -->
           <div class="relative group rounded-xl overflow-hidden border border-red-800">
             <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=900&q=80" alt="John" class="w-full h-72 object-cover group-hover:scale-105 transition-transform" />
             <div class="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
@@ -119,7 +110,6 @@
       </div>
     </section>
 
-    <!-- ORGANISERS & EVENT DETAILS -->
     <section data-page="organisers" class="page hidden py-20 px-6">
       <div class="max-w-4xl mx-auto text-center">
         <h2 class="text-3xl font-bold text-red-400">From the Organizer's Desk</h2>
@@ -144,7 +134,6 @@
       </div>
     </section>
 
-    <!-- SPEAKERS — separate 'page' (SPA) with continuous auto-scroll carousel -->
     <section data-page="speakers" class="page hidden py-20 px-6">
       <div class="max-w-6xl mx-auto">
         <h2 class="text-3xl font-bold text-red-400 text-center mb-8">Speakers</h2>
@@ -161,7 +150,6 @@
         <p class="mt-8 text-gray-300 text-center">Click any card to view a full speaker bio (placeholder).</p>
       </div>
     </section>
-
   </main>
 
   <footer class="py-10 text-center text-gray-400 border-t border-red-900">
@@ -175,96 +163,19 @@
   </footer>
 
   <script>
-    // Simple SPA navigation
     (function(){
-      const links = document.querySelectorAll('.nav-link');
-      function showPage(name){
-        document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
-        const page = document.querySelector(`[data-page="${name}"]`);
-        if(page) page.classList.remove('hidden');
-        // highlight nav
-        document.querySelectorAll('#nav .nav-link').forEach(a => a.classList.remove('text-red-400'));
-        document.querySelectorAll('#nav .nav-link').forEach(a => { if(a.dataset.page===name) a.classList.add('text-red-400') });
-        window.scrollTo({top:0,behavior:'instant'});
-      }
-
-      // attach nav handlers
-      document.querySelectorAll('#nav a').forEach(a => {
-        a.addEventListener('click', function(e){
-          e.preventDefault();
-          const page = this.dataset.page;
-          if(page) {
-            history.pushState({page}, '', '#'+page);
-            showPage(page);
-          }
-        });
-      });
-
-      // set initial page from hash or default
-      const initial = location.hash.replace('#','') || 'home';
-      // wire nav-link dataset for highlighting
-      document.querySelectorAll('#nav a').forEach(a=>{ a.classList.add('nav-link'); a.dataset.page = a.dataset.page || a.getAttribute('data-page') || a.href.split('#')[1]; });
-      showPage(initial);
-      window.addEventListener('popstate', ()=>{ const p = location.hash.replace('#','')||'home'; showPage(p); });
+      const links=document.querySelectorAll('.nav-link');
+      function showPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));const page=document.querySelector(`[data-page="${name}"]`);if(page)page.classList.remove('hidden');document.querySelectorAll('#nav .nav-link').forEach(a=>a.classList.remove('text-red-400'));document.querySelectorAll('#nav .nav-link').forEach(a=>{if(a.dataset.page===name)a.classList.add('text-red-400')});window.scrollTo({top:0,behavior:'instant'})}
+      document.querySelectorAll('#nav a').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const page=this.dataset.page;if(page){history.pushState({page},'', '#'+page);showPage(page)}})});
+      const initial=location.hash.replace('#','')||'home';document.querySelectorAll('#nav a').forEach(a=>{a.classList.add('nav-link');a.dataset.page=a.dataset.page||a.getAttribute('data-page')||a.href.split('#')[1]});showPage(initial);window.addEventListener('popstate',()=>{const p=location.hash.replace('#','')||'home';showPage(p)});
     })();
 
-    // Carousel: build items, duplicate for seamless loop, and animate by changing scrollLeft
     (function(){
-      const speakers = [
-        {id:1,name:'Dr. Asha Rao',title:'AI & Society',photo:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&q=80',bio:'Extended placeholder bio for Dr. Asha Rao.'},
-        {id:2,name:'Rahul Mehta',title:'Climate Storyteller',photo:'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=1200&q=80',bio:'Extended placeholder bio for Rahul Mehta.'},
-        {id:3,name:'Sana Iqbal',title:'Urban Designer',photo:'https://images.unsplash.com/photo-1545996124-1b0c6f3a0a6b?w=1200&q=80',bio:'Extended placeholder bio for Sana Iqbal.'},
-        {id:4,name:'Anil Kumar',title:'Neuroscientist',photo:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=1200&q=80',bio:'Extended placeholder bio for Anil Kumar.'},
-        {id:5,name:'Leena Patel',title:'Entrepreneur',photo:'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=1200&q=80',bio:'Extended placeholder bio for Leena Patel.'}
-      ];
-
-      const track = document.getElementById('track');
-      if(!track) return;
-
-      // render two sets for seamlessness
-      function renderSet(){
-        speakers.forEach(s => {
-          const el = document.createElement('div'); el.className = 'card';
-          el.innerHTML = `<img src="${s.photo}" alt="${s.name}" />
-            <div class="meta">
-              <div class="text-red-400 font-semibold">${s.name}</div>
-              <div class="text-sm text-gray-400">${s.title}</div>
-              <p class="mt-2 text-gray-300 text-sm">${s.bio}</p>
-            </div>`;
-          el.addEventListener('click', ()=>openSpeakerModal(s));
-          track.appendChild(el);
-        });
-      }
-
-      renderSet(); renderSet(); // duplicate
-
-      // auto-scroll animation using requestAnimationFrame
-      const viewport = document.getElementById('carousel');
-      let raf, speed = 0.6;
-
-      function step(){
-        if(!viewport) return;
-        viewport.scrollLeft += speed;
-        // when we've scrolled past half the track, jump back by half to loop
-        if(viewport.scrollLeft >= track.scrollWidth / 2) viewport.scrollLeft -= track.scrollWidth / 2;
-        raf = requestAnimationFrame(step);
-      }
-
-      // start when speakers page is visible, pause otherwise
-      function start(){ if(!raf) raf = requestAnimationFrame(step); }
-      function stop(){ if(raf){ cancelAnimationFrame(raf); raf = null; } }
-
-      // observe page visibility via hashchange or navigation
-      function onPageChange(){ const page = location.hash.replace('#','') || 'home'; if(page==='speakers') start(); else stop(); }
-      window.addEventListener('hashchange', onPageChange);
-      onPageChange();
-
-      // simple modal for speaker
-      const modal = document.createElement('div'); modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:60;padding:2rem';
-      const inner = document.createElement('div'); inner.style.cssText='max-width:800px;background:#070707;border:1px solid rgba(200,0,30,0.18);padding:1.25rem;border-radius:12px;color:#ddd';
-      modal.appendChild(inner); document.body.appendChild(modal);
-      window.openSpeakerModal = function(s){ inner.innerHTML = `<div style="display:flex;gap:1rem;align-items:flex-start"><img src="${s.photo}" style="width:160px;height:160px;object-fit:cover;border-radius:8px"/><div><h3 style="color:var(--red);font-weight:700">${s.name}</h3><div style="color:#bbb">${s.title}</div><p style="margin-top:0.6rem;color:#ddd">${s.bio}</p></div></div><div style="margin-top:1rem;text-align:right"><button id=closeSpeaker style="padding:.5rem .8rem;background:var(--red);border-radius:6px;border:0;color:#000;font-weight:600">Close</button></div>`; modal.style.display='flex'; document.getElementById('closeSpeaker').onclick=()=>modal.style.display='none'; }
-
+      const speakers=[{id:1,name:'Dr. Asha Rao',title:'AI & Society',photo:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&q=80',bio:'Extended placeholder bio for Dr. Asha Rao.'},{id:2,name:'Rahul Mehta',title:'Climate Storyteller',photo:'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=1200&q=80',bio:'Extended placeholder bio for Rahul Mehta.'},{id:3,name:'Sana Iqbal',title:'Urban Designer',photo:'https://images.unsplash.com/photo-1545996124-1b0c6f3a0a6b?w=1200&q=80',bio:'Extended placeholder bio for Sana Iqbal.'},{id:4,name:'Anil Kumar',title:'Neuroscientist',photo:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=1200&q=80',bio:'Extended placeholder bio for Anil Kumar.'},{id:5,name:'Leena Patel',title:'Entrepreneur',photo:'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=1200&q=80',bio:'Extended placeholder bio for Leena Patel.'}];
+      const track=document.getElementById('track');if(!track)return;function renderSet(){speakers.forEach(s=>{const el=document.createElement('div');el.className='card';el.innerHTML=`<img src="${s.photo}" alt="${s.name}" /><div class="meta"><div class="text-red-400 font-semibold">${s.name}</div><div class="text-sm text-gray-400">${s.title}</div><p class="mt-2 text-gray-300 text-sm">${s.bio}</p></div>`;el.addEventListener('click',()=>openSpeakerModal(s));track.appendChild(el)})}renderSet();renderSet();
+      const viewport=document.getElementById('carousel');let raf,speed=0.6;function step(){if(!viewport)return;viewport.scrollLeft+=speed;if(viewport.scrollLeft>=track.scrollWidth/2)viewport.scrollLeft-=track.scrollWidth/2;raf=requestAnimationFrame(step)}function start(){if(!raf)raf=requestAnimationFrame(step)}function stop(){if(raf){cancelAnimationFrame(raf);raf=null}}
+      function onPageChange(){const page=location.hash.replace('#','')||'home';if(page==='speakers')start();else stop()}window.addEventListener('hashchange',onPageChange);onPageChange();
+      const modal=document.createElement('div');modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:60;padding:2rem';const inner=document.createElement('div');inner.style.cssText='max-width:800px;background:#070707;border:1px solid rgba(200,0,30,0.18);padding:1.25rem;border-radius:12px;color:#ddd';modal.appendChild(inner);document.body.appendChild(modal);window.openSpeakerModal=function(s){inner.innerHTML=`<div style="display:flex;gap:1rem;align-items:flex-start"><img src="${s.photo}" style="width:160px;height:160px;object-fit:cover;border-radius:8px"/><div><h3 style="color:var(--red);font-weight:700">${s.name}</h3><div style="color:#bbb">${s.title}</div><p style="margin-top:0.6rem;color:#ddd">${s.bio}</p></div></div><div style="margin-top:1rem;text-align:right"><button id=closeSpeaker style="padding:.5rem .8rem;background:var(--red);border-radius:6px;border:0;color:#000;font-weight:600">Close</button></div>`;modal.style.display='flex';document.getElementById('closeSpeaker').onclick=()=>modal.style.display='none'}
     })();
   </script>
 </body>
