@@ -1,182 +1,153 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TEDx HPS Begumpet Youth — Landing</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    :root{--red:#c8102e;--dark:#050505}
-    body{background:linear-gradient(180deg,var(--dark) 0%,#2b0000 80%);color:#eee;font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,"Helvetica Neue",Arial}
-    header{backdrop-filter:blur(6px)}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEDx HPS Begumpet Youth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React + ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel to compile JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body class="bg-black text-white">
+    <div id="root"></div>
 
-    .carousel-viewport{position:relative;overflow:hidden}
-    .carousel-track{display:flex;gap:1.25rem;align-items:stretch;white-space:nowrap}
-    .card{background:linear-gradient(180deg,#0b0b0b,#060505);border:1px solid rgba(200,0,30,0.18);border-radius:12px;flex:0 0 320px;overflow:hidden}
-    .card img{width:100%;height:200px;object-fit:cover;display:block}
-    .card .meta{padding:1rem}
+    <script type="text/babel">
+      const LOGO_URL = "https://upload.wikimedia.org/wikipedia/commons/9/9d/TEDx_logo.svg";
+      const INSTAGRAM_URL = "https://www.instagram.com/tedxhps?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
 
-    .carousel-viewport::-webkit-scrollbar{display:none}
-    .carousel-viewport{ -ms-overflow-style:none; scrollbar-width:none }
+      const TEAM = [
+        { id: 1, name: "John Doe", photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=80" },
+        { id: 2, name: "Jane Smith", photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80" },
+        { id: 3, name: "Rahul Verma", photo: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=800&q=80" }
+      ];
 
-    .fade-edge{position:absolute;top:0;bottom:0;width:8vw;pointer-events:none}
-    .fade-left{left:0;background:linear-gradient(90deg,rgba(0,0,0,0.85) 0%,transparent 100%)}
-    .fade-right{right:0;background:linear-gradient(270deg,rgba(0,0,0,0.85) 0%,transparent 100%)}
+      const SPEAKERS = [
+        { id: 1, name: "Dr. Asha Rao", title: "AI & Society", bio: "Short placeholder bio.", photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&q=80" },
+        { id: 2, name: "Rahul Mehta", title: "Climate Storyteller", bio: "Short placeholder bio.", photo: "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=1200&q=80" },
+        { id: 3, name: "Sana Iqbal", title: "Urban Designer", bio: "Short placeholder bio.", photo: "https://images.unsplash.com/photo-1545996124-1b0c6f3a0a6b?w=1200&q=80" }
+      ];
 
-    @media (max-width:768px){.card{flex:0 0 260px}.card img{height:160px}}
-  </style>
-</head>
-<body>
-  <header class="sticky top-0 z-50 bg-black/60 border-b border-red-900">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-4">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/TEDx_logo.svg" alt="TEDx" class="h-10" />
-        <div>
-          <div class="text-red-400 font-bold">TEDx HPS Begumpet Youth</div>
-          <div class="text-xs text-gray-400">Independently organized</div>
-        </div>
-      </div>
+      function SpeakersCarousel({ onSelect }) {
+        const scrollRef = React.useRef(null);
+        const rafRef = React.useRef(null);
 
-      <nav class="flex-1">
-        <ul id="nav" class="mx-auto flex gap-6 justify-center text-sm text-gray-300">
-          <li><a href="#" data-page="home" class="nav-link">Home</a></li>
-          <li><a href="#" data-page="info" class="nav-link">About</a></li>
-          <li><a href="#" data-page="team" class="nav-link">Meet the Team</a></li>
-          <li><a href="#" data-page="organisers" class="nav-link">Organiser's Desk</a></li>
-          <li><a href="#" data-page="speakers" class="nav-link">Speakers</a></li>
-        </ul>
-      </nav>
+        React.useEffect(() => {
+          const container = scrollRef.current;
+          if (!container) return;
 
-      <div class="w-24"></div>
-    </div>
-  </header>
+          let speed = 0.6;
+          const step = () => {
+            container.scrollLeft += speed;
+            if (container.scrollLeft >= container.scrollWidth / 2) container.scrollLeft = 0;
+            rafRef.current = requestAnimationFrame(step);
+          };
 
-  <main id="app">
-    <section data-page="home" class="page min-h-screen flex flex-col items-center justify-center text-center px-6">
-      <h1 class="text-5xl md:text-6xl font-extrabold text-red-400 leading-tight">TED-Tech — Ideas. Code. Culture.</h1>
-      <p class="max-w-3xl text-gray-300 mt-6">A one-day event connecting technology, creativity and civic imagination. Placeholder intro text for landing.</p>
+          rafRef.current = requestAnimationFrame(step);
+          return () => cancelAnimationFrame(rafRef.current);
+        }, []);
 
-      <div class="mt-10 max-w-3xl text-left text-gray-200 space-y-6">
-        <div>
-          <h3 class="text-xl font-semibold text-red-400">Note from the Principal</h3>
-          <p class="text-sm">Principal's welcome message. Placeholder: proud to host TEDx at HPS Begumpet Youth, fostering young voices.</p>
-        </div>
-
-        <div>
-          <h3 class="text-xl font-semibold text-red-400">Note from the Vice Principal</h3>
-          <p class="text-sm">Vice Principal's message. Placeholder: gratitude to volunteers and focus on learning through ideas.</p>
-        </div>
-      </div>
-    </section>
-
-    <section data-page="info" class="page hidden py-20 px-6">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-bold text-red-400">What is TEDx?</h2>
-        <p class="mt-4 text-gray-300">TEDx events are independently organized under license from TED. Placeholder explanatory content.</p>
-
-        <h2 class="text-3xl font-bold text-red-400 mt-12">Importance of Chapter 1</h2>
-        <p class="mt-4 text-gray-300">Chapter 1 signals beginnings, new narratives and is symbolically used for this edition. Placeholder copy.</p>
-
-        <h2 class="text-3xl font-bold text-red-400 mt-12">Theme & Story Behind It</h2>
-        <p class="mt-4 text-gray-300">Narrative explaining inspiration and how the theme connects speakers. Placeholder text for the story.</p>
-      </div>
-    </section>
-
-    <section data-page="team" class="page hidden py-20 px-6">
-      <div class="max-w-6xl mx-auto text-center">
-        <h2 class="text-3xl font-bold text-red-400 mb-8">Meet the Team</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          <div class="relative group rounded-xl overflow-hidden border border-red-800">
-            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=900&q=80" alt="John" class="w-full h-72 object-cover group-hover:scale-105 transition-transform" />
-            <div class="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-              <div class="text-red-400 font-semibold">John Doe — Lead Organizer</div>
+        return (
+          <div className="w-full overflow-hidden" aria-hidden={false}>
+            <div ref={scrollRef} className="flex gap-8 w-max">
+              {[...SPEAKERS, ...SPEAKERS].map((s, i) => (
+                <div key={i} className="inline-block bg-gradient-to-b from-zinc-900 to-black border border-red-800 rounded-xl w-80 flex-shrink-0 overflow-hidden">
+                  <button onClick={() => onSelect(s.id)} className="block text-left w-full">
+                    <img src={s.photo} alt={s.name} className="w-full h-60 object-cover" />
+                    <div className="p-4">
+                      <h4 className="text-xl font-semibold text-red-500">{s.name}</h4>
+                      <p className="text-sm text-gray-400">{s.title}</p>
+                      <p className="mt-2 text-gray-300 text-sm">{s.bio}</p>
+                    </div>
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
+        );
+      }
 
-          <div class="relative group rounded-xl overflow-hidden border border-red-800">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=900&q=80" alt="Jane" class="w-full h-72 object-cover group-hover:scale-105 transition-transform" />
-            <div class="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-              <div class="text-red-400 font-semibold">Jane Smith — Program Head</div>
-            </div>
+      function TEDxWebsite() {
+        const [page, setPage] = React.useState("home");
+        const [currentSpeaker, setCurrentSpeaker] = React.useState(null);
+
+        function handleNav(target) {
+          setCurrentSpeaker(null);
+          setPage(target);
+        }
+
+        function gotoSpeaker(id) {
+          const s = SPEAKERS.find((x) => x.id === id);
+          if (s) setCurrentSpeaker(s);
+        }
+
+        return (
+          <div className="min-h-screen bg-gradient-to-b from-black via-red-900 to-red-700 text-white">
+            <header className="sticky top-0 bg-black/80 backdrop-blur border-b border-red-800 z-50">
+              <div className="max-w-7xl mx-auto px-6 py-4 relative flex items-center">
+                <div className="flex items-center gap-4">
+                  <img src={LOGO_URL} alt="TEDx Logo" className="h-10" />
+                  <span className="text-lg font-bold text-red-600">TEDx HPS Begumpet Youth</span>
+                </div>
+
+                <nav className="absolute left-1/2 transform -translate-x-1/2">
+                  <div className="flex gap-8">
+                    <button onClick={() => handleNav("home")} className={`text-sm font-medium ${page === "home" ? "text-red-400" : "text-gray-300"}`}>Home</button>
+                    <button onClick={() => handleNav("info")} className={`text-sm font-medium ${page === "info" ? "text-red-400" : "text-gray-300"}`}>About</button>
+                    <button onClick={() => handleNav("team")} className={`text-sm font-medium ${page === "team" ? "text-red-400" : "text-gray-300"}`}>Meet the Team</button>
+                    <button onClick={() => handleNav("organisers")} className={`text-sm font-medium ${page === "organisers" ? "text-red-400" : "text-gray-300"}`}>Organisers & Event</button>
+                  </div>
+                </nav>
+
+                <div className="ml-auto w-24" />
+              </div>
+            </header>
+
+            {currentSpeaker && (
+              <div className="fixed inset-0 z-40 bg-black/90 flex items-start justify-center p-8">
+                <div className="max-w-3xl w-full bg-zinc-900 rounded-xl border border-red-800 p-6">
+                  <div className="flex gap-6 items-start">
+                    <img src={currentSpeaker.photo} alt={currentSpeaker.name} className="w-48 h-48 object-cover rounded-md" />
+                    <div>
+                      <h2 className="text-3xl font-bold text-red-500">{currentSpeaker.name}</h2>
+                      <div className="text-gray-300 mt-2">{currentSpeaker.title}</div>
+                      <p className="mt-4 text-gray-300">Extended placeholder biography for {currentSpeaker.name}. Details of achievements and background.</p>
+                      <div className="mt-6 flex gap-3">
+                        <button onClick={() => setCurrentSpeaker(null)} className="px-4 py-2 rounded bg-red-600 text-black font-semibold">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <main>
+              {page === "home" && (
+                <section className="min-h-screen flex flex-col items-center justify-center text-center px-6">
+                  <h1 className="text-6xl font-extrabold text-red-600 mb-6">TED-Tech: The Fusion of Ideas and Innovation</h1>
+                  <p className="max-w-3xl text-gray-300 mb-10">Landing introduction connecting technology, creativity, and youth potential.</p>
+
+                  <div className="w-full max-w-6xl">
+                    <h3 className="text-2xl text-red-400 mb-4">Speakers</h3>
+                    <SpeakersCarousel onSelect={gotoSpeaker} />
+                  </div>
+                </section>
+              )}
+            </main>
+
+            <footer className="bg-black border-t border-red-800 py-10 text-center text-gray-400 relative">
+              <p>© 2025 TEDx HPS Begumpet Youth. Independently organized under TED license.</p>
+              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="absolute bottom-4 left-1/2 -translate-x-1/2">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" className="h-6 w-6" />
+              </a>
+            </footer>
           </div>
+        );
+      }
 
-          <div class="relative group rounded-xl overflow-hidden border border-red-800">
-            <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=900&q=80" alt="Rahul" class="w-full h-72 object-cover group-hover:scale-105 transition-transform" />
-            <div class="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-              <div class="text-red-400 font-semibold">Rahul Verma — Logistics</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section data-page="organisers" class="page hidden py-20 px-6">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-bold text-red-400">From the Organizer's Desk</h2>
-        <p class="mt-4 text-gray-300">Placeholder: a candid narrative about the approval process, collaboration across teams and the hurdles we overcame to host TEDx at HPS.</p>
-
-        <h3 class="text-2xl font-semibold text-red-400 mt-10">Event Details</h3>
-        <p class="mt-3 text-gray-300">Date: April 20, 2025 · Time: 09:00 — 16:00 · Venue: HPS Begumpet Auditorium</p>
-        <p class="mt-2 text-gray-300">Dress code: Attendees — Formal red & black; Volunteers — Coordinated black attire.</p>
-
-        <h3 class="text-2xl font-semibold text-red-400 mt-10">Minute-by-minute agenda (placeholder)</h3>
-        <ol class="mt-4 text-left text-gray-300 max-w-md mx-auto space-y-2">
-          <li>09:00 — Doors open / Registration</li>
-          <li>10:00 — Opening remarks</li>
-          <li>10:15 — Speaker 1</li>
-          <li>11:00 — Speaker 2</li>
-          <li>11:45 — Break</li>
-          <li>12:15 — Speaker 3</li>
-          <li>13:00 — Lunch / Networking</li>
-          <li>14:00 — Afternoon sessions</li>
-          <li>15:30 — Closing</li>
-        </ol>
-      </div>
-    </section>
-
-    <section data-page="speakers" class="page hidden py-20 px-6">
-      <div class="max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold text-red-400 text-center mb-8">Speakers</h2>
-
-        <div class="relative">
-          <div id="carousel" class="carousel-viewport" style="height:360px">
-            <div id="track" class="carousel-track px-6 py-4"></div>
-          </div>
-
-          <div class="fade-edge fade-left" aria-hidden></div>
-          <div class="fade-edge fade-right" aria-hidden></div>
-        </div>
-
-        <p class="mt-8 text-gray-300 text-center">Click any card to view a full speaker bio (placeholder).</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="py-10 text-center text-gray-400 border-t border-red-900">
-    <div class="max-w-6xl mx-auto relative">
-      <div>© 2025 TEDx HPS Begumpet Youth — Independently organized under TED license.</div>
-      <a href="https://www.instagram.com/tedxhps?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" class="inline-block mt-4">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" class="h-6 inline" />
-        <span class="sr-only">Instagram</span>
-      </a>
-    </div>
-  </footer>
-
-  <script>
-    (function(){
-      const links=document.querySelectorAll('.nav-link');
-      function showPage(name){document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'));const page=document.querySelector(`[data-page="${name}"]`);if(page)page.classList.remove('hidden');document.querySelectorAll('#nav .nav-link').forEach(a=>a.classList.remove('text-red-400'));document.querySelectorAll('#nav .nav-link').forEach(a=>{if(a.dataset.page===name)a.classList.add('text-red-400')});window.scrollTo({top:0,behavior:'instant'})}
-      document.querySelectorAll('#nav a').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();const page=this.dataset.page;if(page){history.pushState({page},'', '#'+page);showPage(page)}})});
-      const initial=location.hash.replace('#','')||'home';document.querySelectorAll('#nav a').forEach(a=>{a.classList.add('nav-link');a.dataset.page=a.dataset.page||a.getAttribute('data-page')||a.href.split('#')[1]});showPage(initial);window.addEventListener('popstate',()=>{const p=location.hash.replace('#','')||'home';showPage(p)});
-    })();
-
-    (function(){
-      const speakers=[{id:1,name:'Dr. Asha Rao',title:'AI & Society',photo:'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&q=80',bio:'Extended placeholder bio for Dr. Asha Rao.'},{id:2,name:'Rahul Mehta',title:'Climate Storyteller',photo:'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=1200&q=80',bio:'Extended placeholder bio for Rahul Mehta.'},{id:3,name:'Sana Iqbal',title:'Urban Designer',photo:'https://images.unsplash.com/photo-1545996124-1b0c6f3a0a6b?w=1200&q=80',bio:'Extended placeholder bio for Sana Iqbal.'},{id:4,name:'Anil Kumar',title:'Neuroscientist',photo:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=1200&q=80',bio:'Extended placeholder bio for Anil Kumar.'},{id:5,name:'Leena Patel',title:'Entrepreneur',photo:'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=1200&q=80',bio:'Extended placeholder bio for Leena Patel.'}];
-      const track=document.getElementById('track');if(!track)return;function renderSet(){speakers.forEach(s=>{const el=document.createElement('div');el.className='card';el.innerHTML=`<img src="${s.photo}" alt="${s.name}" /><div class="meta"><div class="text-red-400 font-semibold">${s.name}</div><div class="text-sm text-gray-400">${s.title}</div><p class="mt-2 text-gray-300 text-sm">${s.bio}</p></div>`;el.addEventListener('click',()=>openSpeakerModal(s));track.appendChild(el)})}renderSet();renderSet();
-      const viewport=document.getElementById('carousel');let raf,speed=0.6;function step(){if(!viewport)return;viewport.scrollLeft+=speed;if(viewport.scrollLeft>=track.scrollWidth/2)viewport.scrollLeft-=track.scrollWidth/2;raf=requestAnimationFrame(step)}function start(){if(!raf)raf=requestAnimationFrame(step)}function stop(){if(raf){cancelAnimationFrame(raf);raf=null}}
-      function onPageChange(){const page=location.hash.replace('#','')||'home';if(page==='speakers')start();else stop()}window.addEventListener('hashchange',onPageChange);onPageChange();
-      const modal=document.createElement('div');modal.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:60;padding:2rem';const inner=document.createElement('div');inner.style.cssText='max-width:800px;background:#070707;border:1px solid rgba(200,0,30,0.18);padding:1.25rem;border-radius:12px;color:#ddd';modal.appendChild(inner);document.body.appendChild(modal);window.openSpeakerModal=function(s){inner.innerHTML=`<div style="display:flex;gap:1rem;align-items:flex-start"><img src="${s.photo}" style="width:160px;height:160px;object-fit:cover;border-radius:8px"/><div><h3 style="color:var(--red);font-weight:700">${s.name}</h3><div style="color:#bbb">${s.title}</div><p style="margin-top:0.6rem;color:#ddd">${s.bio}</p></div></div><div style="margin-top:1rem;text-align:right"><button id=closeSpeaker style="padding:.5rem .8rem;background:var(--red);border-radius:6px;border:0;color:#000;font-weight:600">Close</button></div>`;modal.style.display='flex';document.getElementById('closeSpeaker').onclick=()=>modal.style.display='none'}
-    })();
-  </script>
-</body>
+      ReactDOM.createRoot(document.getElementById("root")).render(<TEDxWebsite />);
+    </script>
+  </body>
 </html>
