@@ -8,18 +8,50 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      .animate-scroll {
+        display: flex;
+        animation: scroll 25s linear infinite;
+      }
+    </style>
   </head>
   <body class="bg-black text-white">
     <div id="root"></div>
 
     <script type="text/babel">
       const LOGO_URL = "WhatsApp_Image_2025-10-25_at_20.16.47_d5aa8c9a-removebg-preview.png";
-      const INSTAGRAM_URL = "https://www.instagram.com/tedxhps?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
+      const INSTAGRAM_URL =
+        "https://www.instagram.com/tedxhps?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
 
       const TEAM = [
-        { id: 1, name: "John Doe", photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=80" },
-        { id: 2, name: "Jane Smith", photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80" },
-        { id: 3, name: "Rahul Verma", photo: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=800&q=80" }
+        {
+          id: 1,
+          name: "John Doe",
+          photo:
+            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=80",
+        },
+        {
+          id: 2,
+          name: "Jane Smith",
+          photo:
+            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80",
+        },
+        {
+          id: 3,
+          name: "Rahul Verma",
+          photo:
+            "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=800&q=80",
+        },
       ];
 
       function TEDxWebsite() {
@@ -28,173 +60,156 @@
 
         return (
           <div
-  className={`relative min-h-screen text-white ${
-    page === "home"
-      ? "bg-[url('the-hyderabad-public-school-1496403132-1-pZ5UCsZXu-transformed.jpeg)] bg-cover bg-center"
-      : "bg-gradient-to-b from-black via-red-900 to-red-700"
-  }`}
->
-
-            <header className="sticky top-0 bg-black/80 backdrop-blur border-b border-red-800 z-50">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <img src={LOGO_URL} alt="TEDx Logo" className="h-8 sm:h-10" />
-                </div>
-                <button className="sm:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-                  <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                </button>
-                <nav className="hidden sm:flex gap-6">
-                  {["home", "info", "team", "organisers", "speakers"].map((p) => (
-                    <button
-                      key={p}
-                      onClick={() => setPage(p)}
-                      className={`text-sm font-medium ${page === p ? "text-red-400" : "text-gray-300"}`}
+            className={`relative min-h-screen flex flex-col text-white ${
+              page === "home"
+                ? "bg-[url('the-hyderabad-public-school-1496403132-1-pZ5UCsZXu-transformed.jpeg')] bg-cover bg-center before:absolute before:inset-0 before:bg-gray-900/50 before:z-0"
+                : "bg-gradient-to-b from-black via-red-900 to-red-700"
+            }`}
+          >
+            <div className="relative z-10 flex-grow">
+              <header className="sticky top-0 bg-black/80 backdrop-blur border-b border-red-800 z-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <img src={LOGO_URL} alt="TEDx Logo" className="h-8 sm:h-10" />
+                  </div>
+                  <button
+                    className="sm:hidden"
+                    onClick={() => setMenuOpen(!menuOpen)}
+                  >
+                    <svg
+                      className="w-6 h-6 text-red-500"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
                     >
-                      {p === "home"
-                        ? "Home"
-                        : p === "info"
-                        ? "About"
-                        : p === "team"
-                        ? "Team"
-                        : p === "organisers"
-                        ? "Organisers"
-                        : "Speakers"}
-                    </button>
-                  ))}
-                </nav>
-              </div>
-
-              {menuOpen && (
-                <div className="sm:hidden bg-black border-t border-red-800 flex flex-col items-center py-3">
-                  {["home", "info", "team", "organisers", "speakers"].map((p) => (
-                    <button
-                      key={p}
-                      onClick={() => {
-                        setMenuOpen(false);
-                        setPage(p);
-                      }}
-                      className={`py-2 text-sm font-medium ${page === p ? "text-red-400" : "text-gray-300"}`}
-                    >
-                      {p === "home"
-                        ? "Home"
-                        : p === "info"
-                        ? "About"
-                        : p === "team"
-                        ? "Team"
-                        : p === "organisers"
-                        ? "Organisers"
-                        : "Speakers"}
-                    </button>
-                  ))}
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    </svg>
+                  </button>
+                  <nav className="hidden sm:flex gap-6">
+                    {["home", "info", "team", "organisers", "speakers"].map((p) => (
+                      <button
+                        key={p}
+                        onClick={() => setPage(p)}
+                        className={`text-sm font-medium ${
+                          page === p ? "text-red-400" : "text-gray-300"
+                        }`}
+                      >
+                        {p === "home"
+                          ? "Home"
+                          : p === "info"
+                          ? "About"
+                          : p === "team"
+                          ? "Team"
+                          : p === "organisers"
+                          ? "Organisers"
+                          : "Speakers"}
+                      </button>
+                    ))}
+                  </nav>
                 </div>
-              )}
-            </header>
 
-            <main>
-              {page === "home" && (
-                <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 bg-black/60">
-                  <h1 className="text-3xl sm:text-6xl font-extrabold text-red-600 mb-4 sm:mb-6">
-                    TED-Tech: The Fusion of Ideas and Innovation
-                  </h1>
-                  <p className="max-w-2xl text-gray-200 mb-8 sm:mb-10 text-sm sm:text-base">
-                    Landing introduction connecting technology, creativity, and youth potential.
-                  </p>
-                </section>
-              )}
-
-              {page === "info" && (
-                <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-4xl mx-auto text-center">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">What is TEDx?</h2>
-                  <p className="text-gray-200 mb-8">
-                    TEDx is a program of local, self-organized events that bring people together to share a TED-like experience.
-                  </p>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Importance of Chapter 1</h2>
-                  <p className="text-gray-200 mb-8">
-                    Chapter 1 marks the beginning of a legacy—a movement of youth-driven innovation and dialogue.
-                  </p>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Theme & The Story Behind It</h2>
-                  <p className="text-gray-200">
-                    Our theme represents the intersection of creativity, resilience, and technology shaping tomorrow.
-                  </p>
-                </section>
-              )}
-
-              {page === "team" && (
-                <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto text-center">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Meet the Team</h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-10">
-                    {TEAM.map((member) => (
-                      <div key={member.id} className="relative group rounded-xl overflow-hidden border border-red-800">
-                        <img
-                          src={member.photo}
-                          alt={member.name}
-                          className="object-cover w-full h-48 sm:h-80 transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                          <p className="text-red-500 text-sm sm:text-lg font-semibold">{member.name}</p>
-                        </div>
-                      </div>
+                {menuOpen && (
+                  <div className="sm:hidden bg-black border-t border-red-800 flex flex-col items-center py-3">
+                    {["home", "info", "team", "organisers", "speakers"].map((p) => (
+                      <button
+                        key={p}
+                        onClick={() => {
+                          setMenuOpen(false);
+                          setPage(p);
+                        }}
+                        className={`py-2 text-sm font-medium ${
+                          page === p ? "text-red-400" : "text-gray-300"
+                        }`}
+                      >
+                        {p === "home"
+                          ? "Home"
+                          : p === "info"
+                          ? "About"
+                          : p === "team"
+                          ? "Team"
+                          : p === "organisers"
+                          ? "Organisers"
+                          : "Speakers"}
+                      </button>
                     ))}
                   </div>
-                </section>
-              )}
+                )}
+              </header>
 
-              {page === "organisers" && (
-                <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-4xl mx-auto text-center">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">From the Organiser's Desk</h2>
-                  <p className="text-gray-200 mb-8">
-                    A note from the Principal and Vice Principal acknowledging the dedication behind TEDx HPS Begumpet Youth.
-                  </p>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Event Details</h2>
-                  <p className="text-gray-200">
-                    Date: April 20, 2025 | Time: 9:00 AM - 4:00 PM | Venue: HPS Begumpet Auditorium
-                  </p>
-                  <p className="text-gray-400 mt-4 text-xs sm:text-sm">
-                    Dress Code: Red & Black for attendees, Black for volunteers.
-                  </p>
-                </section>
-              )}
+              <main>
+                {page === "home" && (
+                  <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 bg-black/60">
+                    <h1 className="text-3xl sm:text-6xl font-extrabold text-red-600 mb-4 sm:mb-6">
+                      TED-Tech: The Fusion of Ideas and Innovation
+                    </h1>
+                    <p className="max-w-2xl text-gray-200 mb-8 sm:mb-10 text-sm sm:text-base">
+                      Landing introduction connecting technology, creativity, and youth potential.
+                    </p>
+                  </section>
+                )}
 
-              {page === "speakers" && (
-  <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-7xl mx-auto text-center">
-    <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Speakers</h2>
-    <div className="overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-red-800 scrollbar-track-black py-6">
-      <div className="inline-flex gap-6">
-        {TEAM.map((speaker) => (
-          <div
-            key={speaker.id}
-            className="flex-shrink-0 w-64 sm:w-80 bg-black/70 border border-red-800 rounded-xl overflow-hidden text-center"
-          >
-            <img
-              src={speaker.photo}
-              alt={speaker.name}
-              className="w-full h-64 object-cover"
-            />
-            <div className="p-4">
-              <h3 className="text-lg sm:text-xl font-semibold text-red-400">
-                {speaker.name}
-              </h3>
+                {page === "speakers" && (
+                  <section className="flex flex-col min-h-screen justify-between">
+                    <div className="py-14 sm:py-20 px-4 sm:px-6 max-w-7xl mx-auto text-center flex-grow">
+                      <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">
+                        Speakers
+                      </h2>
+
+                      <div className="relative overflow-hidden">
+                        <div
+                          className="flex gap-6 animate-scroll px-4"
+                          onMouseEnter={(e) =>
+                            (e.currentTarget.style.animationPlayState = "paused")
+                          }
+                          onMouseLeave={(e) =>
+                            (e.currentTarget.style.animationPlayState = "running")
+                          }
+                        >
+                          {TEAM.concat(TEAM).map((speaker, i) => (
+                            <div
+                              key={i}
+                              className="flex-shrink-0 w-64 sm:w-80 bg-black/70 border border-red-800 rounded-xl overflow-hidden text-center transition-transform duration-300 hover:scale-105"
+                            >
+                              <img
+                                src={speaker.photo}
+                                alt={speaker.name}
+                                className="w-full h-64 object-cover"
+                              />
+                              <div className="p-4">
+                                <h3 className="text-lg sm:text-xl font-semibold text-red-400">
+                                  {speaker.name}
+                                </h3>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                )}
+              </main>
             </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-)}
 
-            </main>
-
-            <footer className="bg-black border-t border-red-800 py-6 sm:py-10 text-center text-gray-400 relative">
+            <footer className="bg-black border-t border-red-800 py-6 text-center text-gray-400 mt-auto">
               <p className="text-xs sm:text-sm">
-                © 2025 TEDx HPS Begumpet Youth. Independently organized under TED license.
+                © 2025 TEDx HPS Begumpet Youth. Independently organized under TED
+                license.
               </p>
-              <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2">
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-2"
+              >
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
                   alt="Instagram"
-                  className="h-5 sm:h-6 w-5 sm:w-6"
+                  className="h-6 w-6 inline"
                 />
               </a>
             </footer>
@@ -206,8 +221,3 @@
     </script>
   </body>
 </html>
-
-
-
-
-
