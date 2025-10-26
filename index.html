@@ -22,68 +22,22 @@
         { id: 3, name: "Rahul Verma", photo: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=800&q=80" }
       ];
 
-      const SPEAKERS = [
-        { id: 1, name: "Dr. Asha Rao", title: "AI & Society", bio: "Short placeholder bio.", photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1200&q=80" },
-        { id: 2, name: "Rahul Mehta", title: "Climate Storyteller", bio: "Short placeholder bio.", photo: "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=1200&q=80" },
-        { id: 3, name: "Sana Iqbal", title: "Urban Designer", bio: "Short placeholder bio.", photo: "https://images.unsplash.com/photo-1545996124-1b0c6f3a0a6b?w=1200&q=80" }
-      ];
-
-      function SpeakersCarousel({ onSelect }) {
-        const scrollRef = React.useRef(null);
-        const directionRef = React.useRef(1);
-
-        React.useEffect(() => {
-          const el = scrollRef.current;
-          if (!el) return;
-
-          const speed = 0.8;
-          function step() {
-            el.scrollLeft += directionRef.current * speed;
-            if (el.scrollLeft + el.clientWidth >= el.scrollWidth || el.scrollLeft <= 0) {
-              directionRef.current *= -1;
-            }
-            requestAnimationFrame(step);
-          }
-          requestAnimationFrame(step);
-        }, []);
-
-        return (
-          <div className="w-full overflow-hidden">
-            <div ref={scrollRef} className="flex gap-6 w-max px-4 sm:px-0">
-              {SPEAKERS.map((s) => (
-                <div key={s.id} className="inline-block bg-gradient-to-b from-zinc-900 to-black border border-red-800 rounded-xl w-64 sm:w-80 flex-shrink-0 overflow-hidden">
-                  <button onClick={() => onSelect(s.id)} className="block text-left w-full">
-                    <img src={s.photo} alt={s.name} className="w-full h-48 sm:h-60 object-cover" />
-                    <div className="p-3 sm:p-4">
-                      <h4 className="text-lg sm:text-xl font-semibold text-red-500">{s.name}</h4>
-                      <p className="text-xs sm:text-sm text-gray-400">{s.title}</p>
-                      <p className="mt-2 text-gray-300 text-xs sm:text-sm">{s.bio}</p>
-                    </div>
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      }
-
       function TEDxWebsite() {
         const [page, setPage] = React.useState("home");
         const [menuOpen, setMenuOpen] = React.useState(false);
-        const [currentSpeaker, setCurrentSpeaker] = React.useState(null);
-
-        function gotoSpeaker(id) {
-          const s = SPEAKERS.find((x) => x.id === id);
-          if (s) setCurrentSpeaker(s);
-        }
 
         return (
-          <div className="min-h-screen bg-gradient-to-b from-black via-red-900 to-red-700 text-white">
+          <div
+            className={`min-h-screen text-white ${
+              page === "home"
+                ? "bg-[url('your-background.jpg')] bg-cover bg-center"
+                : "bg-gradient-to-b from-black via-red-900 to-red-700"
+            }`}
+          >
             <header className="sticky top-0 bg-black/80 backdrop-blur border-b border-red-800 z-50">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <img src={LOGO_URL} alt="TEDx Logo" className="h-8 sm:h-10" />
-                  
                 </div>
                 <button className="sm:hidden" onClick={() => setMenuOpen(!menuOpen)}>
                   <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -91,13 +45,10 @@
                   </svg>
                 </button>
                 <nav className="hidden sm:flex gap-6">
-                  {["home", "info", "team", "organisers"].map((p) => (
+                  {["home", "info", "team", "organisers", "speakers"].map((p) => (
                     <button
                       key={p}
-                      onClick={() => {
-                        setCurrentSpeaker(null);
-                        setPage(p);
-                      }}
+                      onClick={() => setPage(p)}
                       className={`text-sm font-medium ${page === p ? "text-red-400" : "text-gray-300"}`}
                     >
                       {p === "home"
@@ -106,7 +57,9 @@
                         ? "About"
                         : p === "team"
                         ? "Team"
-                        : "Organisers"}
+                        : p === "organisers"
+                        ? "Organisers"
+                        : "Speakers"}
                     </button>
                   ))}
                 </nav>
@@ -114,12 +67,11 @@
 
               {menuOpen && (
                 <div className="sm:hidden bg-black border-t border-red-800 flex flex-col items-center py-3">
-                  {["home", "info", "team", "organisers"].map((p) => (
+                  {["home", "info", "team", "organisers", "speakers"].map((p) => (
                     <button
                       key={p}
                       onClick={() => {
                         setMenuOpen(false);
-                        setCurrentSpeaker(null);
                         setPage(p);
                       }}
                       className={`py-2 text-sm font-medium ${page === p ? "text-red-400" : "text-gray-300"}`}
@@ -130,57 +82,39 @@
                         ? "About"
                         : p === "team"
                         ? "Team"
-                        : "Organisers"}
+                        : p === "organisers"
+                        ? "Organisers"
+                        : "Speakers"}
                     </button>
                   ))}
                 </div>
               )}
             </header>
 
-            {currentSpeaker && (
-              <div className="fixed inset-0 z-40 bg-black/90 flex items-center justify-center p-4">
-                <div className="max-w-md sm:max-w-3xl w-full bg-zinc-900 rounded-xl border border-red-800 p-4 sm:p-6">
-                  <img src={currentSpeaker.photo} alt={currentSpeaker.name} className="w-full h-56 sm:h-72 object-cover rounded-md mb-4" />
-                  <h2 className="text-2xl sm:text-3xl font-bold text-red-500">{currentSpeaker.name}</h2>
-                  <div className="text-gray-300 mt-1 mb-3 text-sm sm:text-base">{currentSpeaker.title}</div>
-                  <p className="text-gray-300 text-sm sm:text-base">
-                    Extended placeholder biography for {currentSpeaker.name}. Details of achievements and background.
-                  </p>
-                  <button onClick={() => setCurrentSpeaker(null)} className="mt-4 sm:mt-6 px-4 py-2 rounded bg-red-600 text-black font-semibold w-full sm:w-auto">
-                    Close
-                  </button>
-                </div>
-              </div>
-            )}
-
             <main>
               {page === "home" && (
-                <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10">
+                <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 bg-black/60">
                   <h1 className="text-3xl sm:text-6xl font-extrabold text-red-600 mb-4 sm:mb-6">
                     TED-Tech: The Fusion of Ideas and Innovation
                   </h1>
-                  <p className="max-w-2xl text-gray-300 mb-8 sm:mb-10 text-sm sm:text-base">
+                  <p className="max-w-2xl text-gray-200 mb-8 sm:mb-10 text-sm sm:text-base">
                     Landing introduction connecting technology, creativity, and youth potential.
                   </p>
-                  <div className="w-full max-w-6xl">
-                    <h3 className="text-xl sm:text-2xl text-red-400 mb-4">Speakers</h3>
-                    <SpeakersCarousel onSelect={gotoSpeaker} />
-                  </div>
                 </section>
               )}
 
               {page === "info" && (
                 <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-4xl mx-auto text-center">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-4 sm:mb-6">What is TEDx?</h2>
-                  <p className="text-gray-200 mb-8 sm:mb-10 text-sm sm:text-base">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">What is TEDx?</h2>
+                  <p className="text-gray-200 mb-8">
                     TEDx is a program of local, self-organized events that bring people together to share a TED-like experience.
                   </p>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-4 sm:mb-6">Importance of Chapter 1</h2>
-                  <p className="text-gray-200 mb-8 sm:mb-10 text-sm sm:text-base">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Importance of Chapter 1</h2>
+                  <p className="text-gray-200 mb-8">
                     Chapter 1 marks the beginning of a legacy—a movement of youth-driven innovation and dialogue.
                   </p>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-4 sm:mb-6">Theme & The Story Behind It</h2>
-                  <p className="text-gray-200 text-sm sm:text-base">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Theme & The Story Behind It</h2>
+                  <p className="text-gray-200">
                     Our theme represents the intersection of creativity, resilience, and technology shaping tomorrow.
                   </p>
                 </section>
@@ -188,11 +122,15 @@
 
               {page === "team" && (
                 <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto text-center">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-4 sm:mb-6">Meet the Team</h2>
+                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Meet the Team</h2>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-10">
                     {TEAM.map((member) => (
                       <div key={member.id} className="relative group rounded-xl overflow-hidden border border-red-800">
-                        <img src={member.photo} alt={member.name} className="object-cover w-full h-48 sm:h-80 transition-transform duration-500 group-hover:scale-105" />
+                        <img
+                          src={member.photo}
+                          alt={member.name}
+                          className="object-cover w-full h-48 sm:h-80 transition-transform duration-500 group-hover:scale-105"
+                        />
                         <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                           <p className="text-red-500 text-sm sm:text-lg font-semibold">{member.name}</p>
                         </div>
@@ -204,25 +142,40 @@
 
               {page === "organisers" && (
                 <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-4xl mx-auto text-center">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-4 sm:mb-6">From the Organiser's Desk</h2>
-                  <p className="text-gray-200 mb-8 sm:mb-10 text-sm sm:text-base">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">From the Organiser's Desk</h2>
+                  <p className="text-gray-200 mb-8">
                     A note from the Principal and Vice Principal acknowledging the dedication behind TEDx HPS Begumpet Youth.
                   </p>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-4 sm:mb-6">Event Details</h2>
-                  <p className="text-gray-200 text-sm sm:text-base">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Event Details</h2>
+                  <p className="text-gray-200">
                     Date: April 20, 2025 | Time: 9:00 AM - 4:00 PM | Venue: HPS Begumpet Auditorium
                   </p>
-                  <p className="text-gray-400 mt-3 sm:mt-4 text-xs sm:text-sm">
+                  <p className="text-gray-400 mt-4 text-xs sm:text-sm">
                     Dress Code: Red & Black for attendees, Black for volunteers.
+                  </p>
+                </section>
+              )}
+
+              {page === "speakers" && (
+                <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto text-center">
+                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Speakers</h2>
+                  <p className="text-gray-300 text-sm sm:text-base">
+                    Speaker profiles will be listed here.
                   </p>
                 </section>
               )}
             </main>
 
             <footer className="bg-black border-t border-red-800 py-6 sm:py-10 text-center text-gray-400 relative">
-              <p className="text-xs sm:text-sm">© 2025 TEDx HPS Begumpet Youth. Independently organized under TED license.</p>
+              <p className="text-xs sm:text-sm">
+                © 2025 TEDx HPS Begumpet Youth. Independently organized under TED license.
+              </p>
               <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" className="h-5 sm:h-6 w-5 sm:w-6" />
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                  alt="Instagram"
+                  className="h-5 sm:h-6 w-5 sm:w-6"
+                />
               </a>
             </footer>
           </div>
@@ -233,5 +186,3 @@
     </script>
   </body>
 </html>
-
-
