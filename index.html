@@ -158,13 +158,32 @@
               )}
 
               {page === "speakers" && (
-                <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto text-center">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Speakers</h2>
-                  <p className="text-gray-300 text-sm sm:text-base">
-                    Speaker profiles will be listed here.
-                  </p>
-                </section>
-              )}
+  <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-7xl mx-auto text-center">
+    <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Speakers</h2>
+    <div className="overflow-x-auto whitespace-nowrap scrollbar-thin scrollbar-thumb-red-800 scrollbar-track-black py-6">
+      <div className="inline-flex gap-6">
+        {TEAM.map((speaker) => (
+          <div
+            key={speaker.id}
+            className="flex-shrink-0 w-64 sm:w-80 bg-black/70 border border-red-800 rounded-xl overflow-hidden text-center"
+          >
+            <img
+              src={speaker.photo}
+              alt={speaker.name}
+              className="w-full h-64 object-cover"
+            />
+            <div className="p-4">
+              <h3 className="text-lg sm:text-xl font-semibold text-red-400">
+                {speaker.name}
+              </h3>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
             </main>
 
             <footer className="bg-black border-t border-red-800 py-6 sm:py-10 text-center text-gray-400 relative">
@@ -187,6 +206,7 @@
     </script>
   </body>
 </html>
+
 
 
 
