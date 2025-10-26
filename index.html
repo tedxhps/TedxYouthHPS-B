@@ -34,8 +34,9 @@
 
 .animate-marquee {
   display: flex;
-  animation: marquee 25s linear infinite;
+  animation: marquee 35s linear infinite;
 }
+
 
     </style>
   </head>
@@ -48,25 +49,58 @@
         "https://www.instagram.com/tedxhps?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
 
       const TEAM = [
-        {
-          id: 1,
-          name: "John Doe",
-          photo:
-            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&q=80",
-        },
-        {
-          id: 2,
-          name: "Jane Smith",
-          photo:
-            "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=800&q=80",
-        },
-        {
-          id: 3,
-          name: "Rahul Verma",
-          photo:
-            "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=800&q=80",
-        },
-      ];
+  {
+    name: "John Doe",
+    photo: "speaker1.jpg",
+    description: "John is a storyteller and educator focused on innovation."
+  },
+  {
+    name: "Jane Smith",
+    photo: "speaker2.jpg",
+    description: "Jane explores the intersection of art, science, and technology."
+  },
+  {
+    name: "Rahul Verma",
+    photo: "speaker3.jpg",
+    description: "Rahul advocates for sustainable urban development."
+  },
+  {
+    name: "Aisha Khan",
+    photo: "speaker4.jpg",
+    description: "Aisha works on AI ethics and human-centered computing."
+  },
+  {
+    name: "Michael Lee",
+    photo: "speaker5.jpg",
+    description: "Michael is a musician and engineer bridging sound and code."
+  },
+  {
+    name: "Sara Patel",
+    photo: "speaker6.jpg",
+    description: "Sara leads youth initiatives in climate resilience."
+  },
+  {
+    name: "David Chen",
+    photo: "speaker7.jpg",
+    description: "David designs systems for equitable education access."
+  },
+  {
+    name: "Leila Roberts",
+    photo: "speaker8.jpg",
+    description: "Leila is a documentary filmmaker amplifying unheard voices."
+  },
+  {
+    name: "Omar Siddiqui",
+    photo: "speaker9.jpg",
+    description: "Omar is an entrepreneur using robotics for social good."
+  },
+  {
+    name: "Priya Nair",
+    photo: "speaker10.jpg",
+    description: "Priya explores neuroscience and the future of AI empathy."
+  }
+];
+
 
       function TEDxWebsite() {
         const [page, setPage] = React.useState("home");
@@ -225,12 +259,12 @@
         Speakers
       </h2>
 
-      <div className="relative w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden flex justify-center">
         <div className="flex w-max animate-marquee">
           {TEAM.concat(TEAM).map((speaker, i) => (
             <div
               key={i}
-              className="flex-shrink-0 w-64 sm:w-80 mx-4 bg-black/70 border border-red-800 rounded-xl overflow-hidden text-center transition-transform duration-300 hover:scale-105"
+              className="flex-shrink-0 w-72 sm:w-80 mx-4 bg-black/70 border border-red-800 rounded-xl overflow-hidden text-center transition-transform duration-300 hover:scale-105"
             >
               <img
                 src={speaker.photo}
@@ -238,9 +272,12 @@
                 className="w-full h-64 object-cover"
               />
               <div className="p-4">
-                <h3 className="text-lg sm:text-xl font-semibold text-red-400">
+                <h3 className="text-lg sm:text-xl font-semibold text-red-400 mb-2">
                   {speaker.name}
                 </h3>
+                <p className="text-sm sm:text-base text-gray-300">
+                  {speaker.description}
+                </p>
               </div>
             </div>
           ))}
@@ -280,5 +317,6 @@
     </script>
   </body>
 </html>
+
 
 
