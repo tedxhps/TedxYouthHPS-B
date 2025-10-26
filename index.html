@@ -228,23 +228,24 @@
               </main>
 
               {/* Footer */}
-              <footer className="bg-black border-t border-red-800 py-6 text-center text-gray-400 mt-auto">
-                <p className="text-xs sm:text-sm">
-                  © 2025 TEDx HPS Begumpet Youth. Independently organized under TED license.
-                </p>
-                <a
-                  href={INSTAGRAM_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-2"
-                >
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-                    alt="Instagram"
-                    className="h-6 w-6 inline"
-                  />
-                </a>
-              </footer>
+              <footer className="w-full mt-auto bg-black border-t border-red-800 py-6 text-center text-gray-400 fixed bottom-0 left-0">
+  <p className="text-xs sm:text-sm">
+    © 2025 TEDx HPS Begumpet Youth. Independently organized under TED license.
+  </p>
+  <a
+    href={INSTAGRAM_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-block mt-2"
+  >
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+      alt="Instagram"
+      className="h-6 w-6 inline"
+    />
+  </a>
+</footer>
+
             </div>
           </div>
         );
@@ -254,3 +255,4 @@
     </script>
   </body>
 </html>
+
