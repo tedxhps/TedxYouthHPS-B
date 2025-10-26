@@ -231,9 +231,14 @@
 <footer
   className={`w-full bg-black border-t border-red-800 py-6 text-center text-gray-400 ${
     page === "info" || page === "organisers"
-      ? "absolute bottom-0 left-0"
+      ? "fixed bottom-0 left-0"
       : "relative"
   }`}
+  style={{
+    position: page === "info" || page === "organisers" ? "fixed" : "relative",
+    bottom: page === "info" || page === "organisers" ? 0 : "auto",
+    left: 0,
+  }}
 >
   <p className="text-xs sm:text-sm">
     © 2025 TEDx HPS Begumpet Youth. Independently organized under TED license.
@@ -264,6 +269,7 @@
     </script>
   </body>
 </html>
+
 
 
 
