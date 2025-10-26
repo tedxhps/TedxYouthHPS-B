@@ -23,6 +23,20 @@
         display: flex;
         animation: scroll 25s linear infinite;
       }
+      @keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  animation: marquee 25s linear infinite;
+}
+
     </style>
   </head>
   <body class="bg-black text-white">
@@ -204,28 +218,19 @@
                   </p>
                 </section>
               )}
-                {page === "speakers" && (
-  <section className="flex flex-col min-h-screen justify-between">
+{page === "speakers" && (
+  <section className="relative flex flex-col justify-between min-h-screen bg-gradient-to-b from-black via-red-900 to-red-700 text-white overflow-hidden">
     <div className="py-14 sm:py-20 px-4 sm:px-6 max-w-7xl mx-auto text-center flex-grow">
-      <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">
+      <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-8">
         Speakers
       </h2>
 
-      <div className="relative overflow-hidden flex justify-center">
-        <div
-          className="flex gap-6 animate-scroll px-4"
-          style={{ width: "max-content" }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.animationPlayState = "paused")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.animationPlayState = "running")
-          }
-        >
+      <div className="relative w-full overflow-hidden">
+        <div className="flex w-max animate-marquee">
           {TEAM.concat(TEAM).map((speaker, i) => (
             <div
               key={i}
-              className="flex-shrink-0 w-64 sm:w-80 bg-black/70 border border-red-800 rounded-xl overflow-hidden text-center transition-transform duration-300 hover:scale-105"
+              className="flex-shrink-0 w-64 sm:w-80 mx-4 bg-black/70 border border-red-800 rounded-xl overflow-hidden text-center transition-transform duration-300 hover:scale-105"
             >
               <img
                 src={speaker.photo}
@@ -244,6 +249,7 @@
     </div>
   </section>
 )}
+
 
               </main>
             </div>
@@ -274,4 +280,5 @@
     </script>
   </body>
 </html>
+
 
