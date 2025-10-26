@@ -108,12 +108,15 @@
 
         return (
           <div
-            className={`relative min-h-screen flex flex-col text-white ${
-              page === "home"
-                ? "bg-[url('the-hyderabad-public-school-1496403132-1-pZ5UCsZXu-transformed.jpeg')] bg-cover bg-center before:absolute before:inset-0 before:bg-gray-900/50 before:z-0"
-                : "bg-gradient-to-b from-black via-red-900 to-red-700"
-            }`}
-          >
+  className={`relative min-h-screen text-white ${
+    page === "home"
+      ? "bg-[url('the-hyderabad-public-school-1496403132-1-pZ5UCsZXu-transformed.jpeg')] bg-cover bg-center"
+      : "bg-[url('af750a28-6207-4ef2-92ff-716b95e65e28.jpg')] bg-cover bg-center"
+  }`}
+>
+  <div className="absolute inset-0 bg-black/50"></div>
+  <div className="relative z-10">
+
             <div className="relative z-10 flex-grow">
               <header className="sticky top-0 bg-black/80 backdrop-blur border-b border-red-800 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
@@ -310,6 +313,7 @@
               </a>
             </footer>
           </div>
+          </div>
         );
       }
 
@@ -317,6 +321,7 @@
     </script>
   </body>
 </html>
+
 
 
 
