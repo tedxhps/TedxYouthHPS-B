@@ -201,7 +201,7 @@ We extend our deepest appreciation to the team of organisers, speakers, and ment
                 )}
 
 {page === "schedule" && (
-  <section className="relative min-h-screen bg-[url('af750a28-6207-4ef2-92ff-716b95e65e28.jpg')] bg-cover bg-center text-white py-16 px-6 sm:px-12">
+  <section className="relative min-h-screen bg-[url('af750a28-6207-4ef2-92ff-716b95e65e28.jpg')] bg-cover bg-center text-white py-16 px-4 sm:px-12">
     <div className="absolute inset-0 bg-black/60"></div>
     <div className="relative z-10 max-w-5xl mx-auto">
       <h2 className="text-5xl font-bold text-center text-red-500 mb-16">
@@ -209,7 +209,7 @@ We extend our deepest appreciation to the team of organisers, speakers, and ment
       </h2>
 
       {/* Vertical Red Line */}
-      <div className="absolute left-1/2 top-40 bottom-10 w-1 bg-red-800 transform -translate-x-1/2"></div>
+      <div className="absolute left-1/2 top-40 bottom-10 w-[2px] bg-red-800 transform -translate-x-1/2"></div>
 
       <div className="space-y-16 relative">
         {[
@@ -235,24 +235,24 @@ We extend our deepest appreciation to the team of organisers, speakers, and ment
             } relative`}
           >
             {/* Connector Dot */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-5 h-5 bg-red-500 border-4 border-black rounded-full z-20"></div>
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-red-500 border-4 border-black rounded-full z-20"></div>
 
             {/* Card */}
             <div
-              className={`w-full sm:w-[45%] bg-black/70 border border-red-800 rounded-xl shadow-lg p-6 backdrop-blur-md ${
+              className={`w-[85%] sm:w-[40%] bg-black/70 border border-red-800 rounded-xl shadow-lg p-5 sm:p-6 backdrop-blur-md ${
                 i % 2 === 0 ? "sm:mr-auto" : "sm:ml-auto"
-              }`}
+              } text-center sm:text-left`}
             >
               <p
-                className={`text-red-400 text-lg font-semibold mb-2 ${
-                  i % 2 === 0 ? "text-right" : "text-left"
+                className={`text-red-400 text-base sm:text-lg font-semibold mb-2 ${
+                  i % 2 === 0 ? "sm:text-left" : "sm:text-right"
                 }`}
               >
                 {time}
               </p>
               <p
-                className={`text-gray-200 text-base ${
-                  i % 2 === 0 ? "text-right" : "text-left"
+                className={`text-gray-200 text-sm sm:text-base leading-relaxed ${
+                  i % 2 === 0 ? "sm:text-left" : "sm:text-right"
                 }`}
               >
                 {event}
@@ -264,6 +264,7 @@ We extend our deepest appreciation to the team of organisers, speakers, and ment
     </div>
   </section>
 )}
+
 
               </main>
 
@@ -285,5 +286,6 @@ We extend our deepest appreciation to the team of organisers, speakers, and ment
     </script>
   </body>
 </html>
+
 
 
