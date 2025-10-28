@@ -106,7 +106,9 @@
                           ? "Team"
                           : p === "organisers"
                           ? "Organisers"
-                          : "Speakers"}
+                          : p=="speakers"
+                          ? "Speakers"
+                          :"Schedule"}
                       </button>
                     ))}
                   </nav>
@@ -114,7 +116,7 @@
 
                 {menuOpen && (
                   <div className="sm:hidden bg-black border-t border-red-800 flex flex-col items-center py-3">
-                    {["home", "info", "team", "organisers", "speakers"].map((p) => (
+                    {["home", "info", "team", "organisers", "speakers","schedule"].map((p) => (
                       <button
                         key={p}
                         onClick={() => {
@@ -133,7 +135,9 @@
                           ? "Team"
                           : p === "organisers"
                           ? "Organisers"
-                          : "Speakers"}
+                          : p=="speakers"
+                          ? "Speakers"
+                          :"Schedule"}
                       </button>
                     ))}
                   </div>
@@ -244,6 +248,48 @@ We extend our deepest appreciation to the team of organisers, speakers, and ment
     </div>
   </section>
 )}
+                {page === "schedule" && (
+  <section className="relative min-h-screen bg-[url('af750a28-6207-4ef2-92ff-716b95e65e28.jpg')] bg-cover bg-center text-white py-16 px-6 sm:px-12">
+    <div className="absolute inset-0 bg-black/60"></div>
+    <div className="relative z-10 max-w-5xl mx-auto">
+      <h2 className="text-4xl sm:text-5xl font-bold text-center text-red-500 mb-12">
+        Event Schedule
+      </h2>
+
+      <div className="space-y-12">
+        {[
+          ["4:00 PM – 4:15 PM", "Grand Opening & Host Introduction + Opening Performance"],
+          ["4:17 PM – 4:32 PM", "Talk 1 – Dr. Raghu Ram Pillarisetti"],
+          ["4:34 PM – 4:49 PM", "Talk 2 – Ruhan Naqash"],
+          ["4:51 PM – 5:06 PM", "Talk 3 – Akarshana Sathish J"],
+          ["5:08 PM – 5:23 PM", "Talk 4 – Ramendra Kumar"],
+          ["5:23 PM – 5:53 PM", "Tea Break (30 min networking activity)"],
+          ["5:55 PM – 6:10 PM", "Talk 5 – Adhyant"],
+          ["6:12 PM – 6:27 PM", "Talk 6 – Kalki Subramanian"],
+          ["6:29 PM – 6:44 PM", "Talk 7 – Hitesh Dolwani"],
+          ["6:46 PM – 7:01 PM", "Talk 8 – Kritika Sharma"],
+          ["7:04 PM – 7:19 PM", "Talk 9 – Capt. Mushtaq Ahmad Bhat"],
+          ["7:19 PM – 7:30 PM", "Closing Remarks & Acknowledgements"],
+          ["7:30 PM – 7:50 PM", "Photo Session – Group & Speaker Photos"],
+          ["7:50 PM onwards", "Dinner"]
+        ].map(([time, event], i) => (
+          <div
+            key={i}
+            className={`flex flex-col sm:flex-row ${
+              i % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"
+            } items-center gap-6 sm:gap-10 bg-black/70 border border-red-800 rounded-xl p-6`}
+          >
+            <div className="w-full sm:w-1/3 text-center sm:text-left">
+              <p className="text-red-400 text-xl font-semibold">{time}</p>
+            </div>
+            <div className="flex-1 text-gray-200 text-lg">{event}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
 
               </main>
 
@@ -289,6 +335,7 @@ We extend our deepest appreciation to the team of organisers, speakers, and ment
     </script>
   </body>
 </html>
+
 
 
 
