@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TEDx HPS Begumpet Youth</title>
 
-    <!-- Tailwind and React setup -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
@@ -20,7 +19,6 @@
           transform: translateX(-50%);
         }
       }
-
       .animate-marquee {
         display: flex;
         animation: marquee 35s linear infinite;
@@ -38,7 +36,7 @@
 
       const TEAM = [
         { name: "Dr. Raghu Ram Pillarisetti", photo: "Raghu Ram.jpg", description: "A proud alumni; world renowned surgeon and pioneer who founded South Asia’s first dedicated breast-health centre and champions cancer awareness." },
-        { name: "Ruhan Naqash", photo: "ruhan.jpg", description: "Co-Founder of MyCaptain, an award-winning edtech platform that helps students discover and pursue their passions through mentorship and experiential learning" },
+        { name: "Ruhan Naqash", photo: "ruhan.jpg", description: "Co-Founder of MyCaptain, an award-winning edtech platform that helps students discover and pursue their passions through mentorship and experiential learning." },
         { name: "Akarshana Sathish J", photo: "Akarshana.jpg", description: "A proud eaglet who has emphasised on the importance of reading, by donating over 16000 books. What started as just a means to help others took her so much further, building 24 libraries across Telangana and Tamil Nadu, with the expectation of the 25th to be inaugurated by the Hon’ble Prime Minister himself." },
         { name: "Ramendra Kumar", photo: "Ramendra kumar.jpg", description: "A proud alumni; prolific writer-storyteller, and motivational speaker whose 49+ books and journey as a cancer-survivor inspire young minds." },
         { name: "Kalki Subramaniam", photo: "kalki.jpg", description: "Transgender rights activist, artist, poet, and entrepreneur who founded the Sahodari Foundation and uses art to advance inclusion." },
@@ -46,23 +44,24 @@
         { name: "Kritika Sharma", photo: "kritika.jpg", description: "Former Mrs. India, single mother, and influential digital creator who inspires thousands by redefining strength, self-worth, and modern womanhood through her journey of resilience and reinvention." },
         { name: "Capt. Mushtaq Ahmad Bhat", photo: "captain.jpg", description: "A former militant from Kashmir, turned undercover asset and army captain, whose journey from conflict to peace-building offers a story of radical transformation." },
       ];
-      const idiots = [
-        {name:"Kriti Malani",photo:"kriti.jpg"},
-        {name:"Aditi Agarwal",photo:"adat.jpg"},
-        {name:"Arushi Baldwa",photo:"arushi.jpg"},
-        {name:"Ishaan Ahuja",photo:"ishan.jpg"},
-        {name:"Anish Varma",photo:"anish.jpg"},
-        {name:"Aakanksha Rayasam",photo:"aakanksha.jpg"},
-        {name:"Adhya Loya",photo:"adhya.jpg"},
-        {name:"Hasini",photo:"hasini.jpg"},
-        {name:"Pranav",photo:"pranav.jpg"},
-        {name:"Raajveer Nath",photo:"rajveer.jpg"},
-        {name:"Siya Thakkar",photo:"siya.jpg"},
-        {name:"Akshith",photo:"akshith.jpg"},
-        {name:"Nitika Gupta",photo:"nitika.jpg"},
-        {name:"Tara",photo:"tara.jpg"},
-        {name:"Aneesh",photo:"aneesh.jpg"},
-        ];
+
+      const TEAM_MEMBERS = [
+        { name: "Kriti Malani", photo: "kriti.jpg" },
+        { name: "Aditi Agarwal", photo: "adat.jpg" },
+        { name: "Arushi Baldwa", photo: "arushi.jpg" },
+        { name: "Ishaan Ahuja", photo: "ishan.jpg" },
+        { name: "Anish Varma", photo: "anish.jpg" },
+        { name: "Aakanksha Rayasam", photo: "aakanksha.jpg" },
+        { name: "Adhya Loya", photo: "adhya.jpg" },
+        { name: "Hasini", photo: "hasini.jpg" },
+        { name: "Pranav", photo: "pranav.jpg" },
+        { name: "Raajveer Nath", photo: "rajveer.jpg" },
+        { name: "Siya Thakkar", photo: "siya.jpg" },
+        { name: "Akshith", photo: "akshith.jpg" },
+        { name: "Nitika Gupta", photo: "nitika.jpg" },
+        { name: "Tara", photo: "tara.jpg" },
+        { name: "Aneesh", photo: "aneesh.jpg" },
+      ];
 
       function TEDxWebsite() {
         const [page, setPage] = React.useState("home");
@@ -77,20 +76,19 @@
             }`}
           >
             <div className="absolute inset-0 bg-black/50"></div>
-            <div className="relative z-10">
+            <div className="relative z-10 min-h-screen flex flex-col">
+              
               {/* Header */}
               <header className="sticky top-0 bg-black/80 backdrop-blur border-b border-red-800 z-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <img src={LOGO_URL} alt="TEDx Logo" className="h-8 sm:h-10" />
-                  </div>
+                  <img src={LOGO_URL} alt="TEDx Logo" className="h-8 sm:h-10" />
                   <button className="sm:hidden" onClick={() => setMenuOpen(!menuOpen)}>
                     <svg className="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
                   </button>
                   <nav className="hidden sm:flex gap-6">
-                    {["home", "info", "team", "organisers", "speakers"].map((p) => (
+                    {["home", "info", "team", "organisers", "speakers", "schedule"].map((p) => (
                       <button
                         key={p}
                         onClick={() => setPage(p)}
@@ -98,25 +96,14 @@
                           page === p ? "text-red-400" : "text-gray-300"
                         }`}
                       >
-                        {p === "home"
-                          ? "Home"
-                          : p === "info"
-                          ? "About"
-                          : p === "team"
-                          ? "Team"
-                          : p === "organisers"
-                          ? "Organisers"
-                          : p=="speakers"
-                          ? "Speakers"
-                          :"Schedule"}
+                        {p.charAt(0).toUpperCase() + p.slice(1)}
                       </button>
                     ))}
                   </nav>
                 </div>
-
                 {menuOpen && (
                   <div className="sm:hidden bg-black border-t border-red-800 flex flex-col items-center py-3">
-                    {["home", "info", "team", "organisers", "speakers","schedule"].map((p) => (
+                    {["home", "info", "team", "organisers", "speakers", "schedule"].map((p) => (
                       <button
                         key={p}
                         onClick={() => {
@@ -127,17 +114,7 @@
                           page === p ? "text-red-400" : "text-gray-300"
                         }`}
                       >
-                        {p === "home"
-                          ? "Home"
-                          : p === "info"
-                          ? "About"
-                          : p === "team"
-                          ? "Team"
-                          : p === "organisers"
-                          ? "Organisers"
-                          : p=="speakers"
-                          ? "Speakers"
-                          :"Schedule"}
+                        {p.charAt(0).toUpperCase() + p.slice(1)}
                       </button>
                     ))}
                   </div>
@@ -145,52 +122,42 @@
               </header>
 
               {/* Main Content */}
-              <main>
+              <main className="flex-grow">
                 {page === "home" && (
-                  <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 py-10 bg-black/60">
+                  <section className="min-h-screen flex flex-col items-center justify-center text-center bg-black/60 px-4 sm:px-6 py-10">
                     <h1 className="text-3xl sm:text-6xl font-extrabold text-red-600 mb-4 sm:mb-6">
-                      TEDxHPS: Error 404: Limits not found
+                      TEDxHPS
                     </h1>
-                    <p className="max-w-2xl text-gray-200 mb-8 sm:mb-10 text-sm sm:text-base">
-                      
+                    <p>
+                       Error 404 — Limits Not Found
                     </p>
                   </section>
                 )}
 
                 {page === "info" && (
                   <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-4xl mx-auto text-center">
-                    <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">What is TEDx?</h2>
-                    <p className="text-gray-200 mb-8">
-                      TEDx is a global program of independently organized events licensed by TED. Each TEDx event is designed to bring people together, students, thinkers, creators, and dreamers to share ideas that spark curiosity, inspire dialogue, and build bridges of understanding within their communities. These gatherings reflect the TED spirit: a belief that powerful ideas, when shared freely, can shape a better future.
+                    <h2 className="text-4xl font-bold text-red-500 mb-6">What is TEDx?</h2>
+                    <p className="text-gray-200 mb-8">TEDx is a global program of independently organized events licensed by TED. Each TEDx event is designed to bring people together, students, thinkers, creators, and dreamers to share ideas that spark curiosity, inspire dialogue, and build bridges of understanding within their communities. These gatherings reflect the TED spirit: a belief that powerful ideas, when shared freely, can shape a better future.
 
-At its heart, TEDx empowers local voices. It turns schools, towns, and organizations into stages for innovation where new perspectives meet, and where one person’s story can ignite another’s imagination. Every event adds to a global conversation about what it means to live thoughtfully and act with purpose.
-                    </p>
-                    <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Importance of Chapter 1</h2>
-                    <p className="text-gray-200 mb-8">
-                      Chapter 1 marks the first step in a legacy of youth-driven innovation, dialogue, and creativity. This inaugural chapter represents a shared belief that change doesn’t wait for permission; it begins when young minds decide to speak, listen, and create together. The first chapter of any story sets the tone for what’s to come. By launching this movement, we’re laying the foundation for generations of students to carry forward,  to think deeper, question harder, and reimagine what’s possible. Chapter 1 is our start, but not our limit.
-                    </p>
-                    <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Theme & The Story Behind It</h2>
-                    <p className="text-gray-200">
-                     Our theme explores the intersection of creativity, resilience, and technology, and the forces that define how we navigate and shape the world ahead. It asks how human imagination and innovation can coexist in a rapidly evolving digital age, and what it means to build a future that’s both connected and compassionate.
+At its heart, TEDx empowers local voices. It turns schools, towns, and organizations into stages for innovation where new perspectives meet, and where one person’s story can ignite another’s imagination. Every event adds to a global conversation about what it means to live thoughtfully and act with purpose.</p>
+                    <h2 className="text-4xl font-bold text-red-500 mb-6">Importance of Chapter 1</h2>
+                    <p className="text-gray-200 mb-8">Chapter 1 marks the first step in a legacy of youth-driven innovation, dialogue, and creativity. This inaugural chapter represents a shared belief that change doesn’t wait for permission; it begins when young minds decide to speak, listen, and create together. The first chapter of any story sets the tone for what’s to come. By launching this movement, we’re laying the foundation for generations of students to carry forward,  to think deeper, question harder, and reimagine what’s possible. Chapter 1 is our start, but not our limit.</p>
+                    <h2 className="text-4xl font-bold text-red-500 mb-6">Theme & The Story Behind It</h2>
+                    <p className="text-gray-200">Our theme explores the intersection of creativity, resilience, and technology, and the forces that define how we navigate and shape the world ahead. It asks how human imagination and innovation can coexist in a rapidly evolving digital age, and what it means to build a future that’s both connected and compassionate.
 
-Behind this theme lies a story of balance. As the world accelerates, we look for moments that remind us of our humanity: the art, emotion, and purpose that technology alone cannot replicate. This is not just a theme for an event, but a lens through which we view our collective tomorrow.
-                    </p>
+Behind this theme lies a story of balance. As the world accelerates, we look for moments that remind us of our humanity: the art, emotion, and purpose that technology alone cannot replicate. This is not just a theme for an event, but a lens through which we view our collective tomorrow.</p>
                   </section>
                 )}
 
                 {page === "team" && (
                   <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-6xl mx-auto text-center">
-                    <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Meet the Team</h2>
+                    <h2 className="text-4xl font-bold text-red-500 mb-6">Meet the Team</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 sm:gap-10">
-                      {idiots.map((member) => (
+                      {TEAM_MEMBERS.map((member) => (
                         <div key={member.name} className="relative group rounded-xl overflow-hidden border border-red-800">
-                          <img
-                            src={member.photo}
-                            alt={member.name}
-                            className="object-cover w-full h-48 sm:h-80 transition-transform duration-500 group-hover:scale-105 object-top"
-                          />
+                          <img src={member.photo} alt={member.name} className="object-cover w-full h-48 sm:h-80 object-top transition-transform duration-500 group-hover:scale-105" />
                           <div className="absolute inset-0 bg-black bg-opacity-70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                            <p className="text-red-500 text-sm sm:text-lg font-semibold">{member.name}</p>
+                            <p className="text-red-500 text-lg font-semibold">{member.name}</p>
                           </div>
                         </div>
                       ))}
@@ -200,132 +167,86 @@ Behind this theme lies a story of balance. As the world accelerates, we look for
 
                 {page === "organisers" && (
                   <section className="py-14 sm:py-20 px-4 sm:px-6 max-w-4xl mx-auto text-center">
-                    <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">From the Organiser's Desk</h2>
+                    <h2 className="text-4xl font-bold text-red-500 mb-6">From the Organiser's Desk</h2>
                     <p className="text-gray-200 mb-8">
                       TEDx HPS Begumpet Youth stands as a testament to the vision, creativity, and determination of our students. What began as an idea to create a platform for meaningful dialogue and youth-led innovation has grown into a movement that reflects the spirit of our school: bold, curious, and future-ready.
 We extend our deepest appreciation to the team of organisers, speakers, and mentors who brought this vision to life. TEDx HPS Begumpet Youth marks a proud milestone one that celebrates not only the brilliance of thought, but the courage to share it with the world.
                     </p>
-                    <h2 className="text-3xl sm:text-4xl font-bold text-red-500 mb-6">Event Details</h2>
-                    <p className="text-gray-200">
-                      Date: November 1st, 2025 | Time: 3:50 - 8:00 PM | Venue: Shaheen
-                    </p>
-                    <p className="text-gray-400 mt-4 text-xs sm:text-sm">
-                      Dress Code: Solid coloured formals, Volunteer tshirt with jeans for volunteers.
-                    </p>
+                    <h2 className="text-4xl font-bold text-red-500 mb-6">Event Details</h2>
+                    <p className="text-gray-200">Date: November 1st, 2025 | Time: 3:50 - 8:00 PM | Venue: Shaheen</p>
+                    <p className="text-gray-400 mt-4 text-sm">Dress Code: Solid coloured formals, Volunteer T-shirt with jeans for volunteers.</p>
                   </section>
                 )}
 
                 {page === "speakers" && (
-  <section className="relative flex flex-col min-h-screen bg-cover bg-center text-white px-6 py-16 sm:px-12 sm:py-20">
-    <div className="absolute inset-0 bg-black/60"></div>
-    <div className="relative z-10 max-w-6xl mx-auto">
-      <h2 className="text-4xl sm:text-5xl font-bold text-center text-red-500 mb-12">
-        Speakers
-      </h2>
+                  <section className="relative flex flex-col min-h-screen bg-cover bg-center text-white px-6 py-16 sm:px-12 sm:py-20">
+                    <div className="absolute inset-0 bg-black/60"></div>
+                    <div className="relative z-10 max-w-6xl mx-auto">
+                      <h2 className="text-5xl font-bold text-center text-red-500 mb-12">Speakers</h2>
+                      <div className="space-y-12">
+                        {TEAM.map((speaker, i) => (
+                          <div key={i} className="flex flex-col sm:flex-row items-center bg-black/70 border border-red-800 rounded-xl overflow-hidden shadow-lg">
+                            <img src={speaker.photo} alt={speaker.name} className="w-full sm:w-1/3 h-64 object-cover object-top" />
+                            <div className="p-6 sm:p-8 flex-1">
+                              <h3 className="text-3xl font-semibold text-red-400 mb-3">{speaker.name}</h3>
+                              <p className="text-gray-300 text-base leading-relaxed">{speaker.description}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </section>
+                )}
 
-      <div className="space-y-12">
-        {TEAM.map((speaker, i) => (
-          <div
-            key={i}
-            className="flex flex-col sm:flex-row items-center bg-black/70 border border-red-800 rounded-xl overflow-hidden shadow-lg"
-          >
-<img
-  src={speaker.photo}
-  alt={speaker.name}
-  className="w-full sm:w-1/3 h-64 object-cover object-top"
-/>
-            <div className="p-6 sm:p-8 flex-1">
-              <h3 className="text-2xl sm:text-3xl font-semibold text-red-400 mb-3">
-                {speaker.name}
-              </h3>
-              <p className="text-gray-300 text-base leading-relaxed">
-                {speaker.description}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-)}
                 {page === "schedule" && (
-  <section className="relative min-h-screen bg-[url('af750a28-6207-4ef2-92ff-716b95e65e28.jpg')] bg-cover bg-center text-white py-16 px-6 sm:px-12">
-    <div className="absolute inset-0 bg-black/60"></div>
-    <div className="relative z-10 max-w-5xl mx-auto">
-      <h2 className="text-4xl sm:text-5xl font-bold text-center text-red-500 mb-12">
-        Event Schedule
-      </h2>
-
-      <div className="space-y-12">
-        {[
-          ["4:00 PM – 4:15 PM", "Grand Opening & Host Introduction + Opening Performance"],
-          ["4:17 PM – 4:32 PM", "Talk 1 – Dr. Raghu Ram Pillarisetti"],
-          ["4:34 PM – 4:49 PM", "Talk 2 – Ruhan Naqash"],
-          ["4:51 PM – 5:06 PM", "Talk 3 – Akarshana Sathish J"],
-          ["5:08 PM – 5:23 PM", "Talk 4 – Ramendra Kumar"],
-          ["5:23 PM – 5:53 PM", "Tea Break (30 min networking activity)"],
-          ["5:55 PM – 6:10 PM", "Talk 5 – Adhyant"],
-          ["6:12 PM – 6:27 PM", "Talk 6 – Kalki Subramanian"],
-          ["6:29 PM – 6:44 PM", "Talk 7 – Hitesh Dolwani"],
-          ["6:46 PM – 7:01 PM", "Talk 8 – Kritika Sharma"],
-          ["7:04 PM – 7:19 PM", "Talk 9 – Capt. Mushtaq Ahmad Bhat"],
-          ["7:19 PM – 7:30 PM", "Closing Remarks & Acknowledgements"],
-          ["7:30 PM – 7:50 PM", "Photo Session – Group & Speaker Photos"],
-          ["7:50 PM onwards", "Dinner"]
-        ].map(([time, event], i) => (
-          <div
-            key={i}
-            className={`flex flex-col sm:flex-row ${
-              i % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"
-            } items-center gap-6 sm:gap-10 bg-black/70 border border-red-800 rounded-xl p-6`}
-          >
-            <div className="w-full sm:w-1/3 text-center sm:text-left">
-              <p className="text-red-400 text-xl font-semibold">{time}</p>
-            </div>
-            <div className="flex-1 text-gray-200 text-lg">{event}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-)}
-
-
+                  <section className="relative min-h-screen bg-[url('af750a28-6207-4ef2-92ff-716b95e65e28.jpg')] bg-cover bg-center text-white py-16 px-6 sm:px-12">
+                    <div className="absolute inset-0 bg-black/60"></div>
+                    <div className="relative z-10 max-w-5xl mx-auto">
+                      <h2 className="text-5xl font-bold text-center text-red-500 mb-12">Event Schedule</h2>
+                      <div className="space-y-12">
+                        {[
+                          ["4:00 PM – 4:15 PM", "Grand Opening & Host Introduction + Opening Performance"],
+                          ["4:17 PM – 4:32 PM", "Talk 1 – Dr. Raghu Ram Pillarisetti"],
+                          ["4:34 PM – 4:49 PM", "Talk 2 – Ruhan Naqash"],
+                          ["4:51 PM – 5:06 PM", "Talk 3 – Akarshana Sathish J"],
+                          ["5:08 PM – 5:23 PM", "Talk 4 – Ramendra Kumar"],
+                          ["5:23 PM – 5:53 PM", "Tea Break (30 min networking activity)"],
+                          ["5:55 PM – 6:10 PM", "Talk 5 – Adhyant"],
+                          ["6:12 PM – 6:27 PM", "Talk 6 – Kalki Subramanian"],
+                          ["6:29 PM – 6:44 PM", "Talk 7 – Hitesh Dolwani"],
+                          ["6:46 PM – 7:01 PM", "Talk 8 – Kritika Sharma"],
+                          ["7:04 PM – 7:19 PM", "Talk 9 – Capt. Mushtaq Ahmad Bhat"],
+                          ["7:19 PM – 7:30 PM", "Closing Remarks & Acknowledgements"],
+                          ["7:30 PM – 7:50 PM", "Photo Session – Group & Speaker Photos"],
+                          ["7:50 PM onwards", "Dinner"]
+                        ].map(([time, event], i) => (
+                          <div
+                            key={i}
+                            className={`flex flex-col sm:flex-row ${
+                              i % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"
+                            } items-center gap-6 sm:gap-10 bg-black/70 border border-red-800 rounded-xl p-6`}
+                          >
+                            <div className="w-full sm:w-1/3 text-center sm:text-left">
+                              <p className="text-red-400 text-xl font-semibold">{time}</p>
+                            </div>
+                            <div className="flex-1 text-gray-200 text-lg">{event}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </section>
+                )}
               </main>
 
               {/* Footer */}
-<footer
-  className={`w-full bg-black border-t border-red-800 py-6 text-center text-gray-400 ${
-    page === "info" || page === "organisers"
-      ? "fixed bottom-0 left-0"
-      : "relative"
-  }`}
-  style={{
-    position: page === "info" || page === "organisers" ? "fixed" : "relative",
-    bottom: page === "info" || page === "organisers" ? 0 : "auto",
-    left: 0,
-  }}
->
-  <p className="text-xs sm:text-sm">
-    © 2025 TEDx HPS Begumpet Youth. Independently organized under TED license.
-  </p>
-  <a
-    href={INSTAGRAM_URL}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="inline-block mt-2"
-  >
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-      alt="Instagram"
-      className="h-6 w-6 inline"
-    />
-  </a>
-</footer>
-
-
-
-
+              <footer className="bg-black border-t border-red-800 py-6 text-center text-gray-400">
+                <p className="text-sm">
+                  © 2025 TEDx HPS Begumpet Youth. Independently organized under TED license.
+                </p>
+                <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="inline-block mt-2">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram" className="h-6 w-6 inline" />
+                </a>
+              </footer>
             </div>
           </div>
         );
@@ -335,29 +256,3 @@ We extend our deepest appreciation to the team of organisers, speakers, and ment
     </script>
   </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
